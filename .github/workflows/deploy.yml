@@ -1,0 +1,46 @@
+name: Deploy Galton Board
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pygbag
+        run: pip install pygbag
+
+      - name: Verify main.py exists
+        run: |
+          if [ ! -f illustration/main.py ]; then
+            echo "Error: main.py not found!" && exit 1;
+          fi
+
+      - name: Build with pygbag
+        run: pygbag --build illustration/main.py
+
+      - name: Debug build output
+        run: ls -R ./illustration/build
+
+      - name: Verify build output
+        run: ls -la ./illustration/build/web
+
+      - name: Disable Jekyll
+        run: echo "" > ./illustration/build/web/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./illustration/build/web
+          publish_branch: gh-pages
