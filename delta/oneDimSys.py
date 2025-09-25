@@ -47,7 +47,7 @@ class WavePacketPropagation(Potential, WavePacket):
         data = np.array([e, -2*e, e])
         diags = np.array([-1, 0, 1])
         Lap = spdiags(data, diags, self.nr, self.nr) / self.dR**2
-        H = -0.5 * Lap + spdiags([self.U], [0], self.nr, self.nr)
+        self.H = -0.5 * Lap + spdiags([self.U], [0], self.nr, self.nr)
 
     def setup_time(self):
         tgrid = TGrid(0., 20, 200)
@@ -55,7 +55,7 @@ class WavePacketPropagation(Potential, WavePacket):
 
     def microstep(self):
         # Time displacement operator E = exp(-i H dT / hbar)
-        self.E = expm(-1j * H.toarray() * self.dT / self.hbar)  # Using full matrix for expm
+        self.E = expm(-1j * self.H.toarray() * self.dT / self.hbar)  # Using full matrix for expm
 
     def simulate(self):
         global rho
