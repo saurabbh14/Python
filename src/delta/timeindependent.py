@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
-from potential.grid import RGrid
-from potential.gridFunc import Potential
+from src.potential.grid import RGrid
+from src.potential.gridFunc import Potential
 
 
 class Kinetic(RGrid):

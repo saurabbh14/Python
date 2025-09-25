@@ -1,11 +1,11 @@
 import numpy as np
-from scipy.sparse import spdiags, eye
+from scipy.sparse import spdiags
 from scipy.linalg import expm
 from scipy.fft import ifft
 import matplotlib.pyplot as plt
 
-from potential.grid import TGrid
-from potential.gridFunc import Potential, WavePacket
+from src.potential.grid import TGrid
+from src.potential.gridFunc import Potential, WavePacket
 
 
 # One-dimensional wave packet propagation using finite-difference method
