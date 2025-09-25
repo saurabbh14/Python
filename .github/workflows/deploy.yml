@@ -22,7 +22,7 @@ jobs:
 
       - name: Verify main.py exists
         run: |
-          if [ ! -f illustration/main.py ]; then
+          if [ ! -f src/main.py ]; then
             echo "Error: main.py not found!" && exit 1;
           fi
 
